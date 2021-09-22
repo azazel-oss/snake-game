@@ -10,12 +10,22 @@ class Scoreboard(Turtle):
         self.penup()
         self.setposition(0, 270)
         self.score = 0
+        with open("HIGH_SCORE.txt", "r") as file:
+            self.high_score = int(file.read())
         self.hideturtle()
 
     def show_score(self):
         self.clear()
-        self.write(f"Score: {self.score}", False, ALIGNMENT, FONT)
+        self.write(f"Score: {self.score}  High Score: {self.high_score}", False, ALIGNMENT, FONT)
 
-    def game_over(self):
-        self.goto(0, 0)
-        self.write("GAME OVER", False, ALIGNMENT, FONT)
+    def reset_game(self):
+        if self.score > self.high_score:
+            self.high_score = self.score
+            with open("HIGH_SCORE.txt", "w") as file:
+                file.write(str(self.high_score))
+        self.score = 0
+        self.show_score()
+
+    # def game_over(self):
+    #     self.goto(0, 0)
+    #     self.write("GAME OVER", False, ALIGNMENT, FONT)
